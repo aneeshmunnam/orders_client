@@ -1,0 +1,8 @@
+type Query {
+    getOrders: List<Order>
+    createOrder: String
+}
+
+type Order {
+
+}
