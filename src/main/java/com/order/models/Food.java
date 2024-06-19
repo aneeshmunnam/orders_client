@@ -1,13 +1,10 @@
-package com.order.controllers.model;
+package com.order.models;
 
 public class Food {
-    public Food(String food, int quantity) {
-        this.food = food;
-        this.quantity = quantity;
-    }
 
     private String food;
     private int quantity;
+    private Float cost;
 
     public String getFood() {
         return food;
@@ -23,5 +20,13 @@ public class Food {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Float getCost() {
+        return cost;
+    }
+
+    public void setCost(Float cost) {
+        this.cost = cost;
     }
 }

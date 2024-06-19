@@ -1,4 +1,4 @@
-package com.order.controllers.model;
+package com.order.models;
 
 import java.util.List;
 
@@ -7,12 +7,8 @@ public class Order {
     private long orderId;
     private long storeId;
     private List<Food> foods;
-
-    public Order(long orderId, long storeId, List<Food> foods) {
-        this.orderId = orderId;
-        this.storeId = storeId;
-        this.foods = foods;
-    }
+    private String status;
+    private Float total;
 
     public long getOrderId() {
         return orderId;
@@ -36,5 +32,21 @@ public class Order {
 
     public void setFoods(List<Food> foods) {
         this.foods = foods;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
     }
 }

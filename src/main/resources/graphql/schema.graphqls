@@ -1,8 +1,30 @@
 type Query {
-    getOrders: List<Order>
-    createOrder: String
+    getOrders: [Order]
+    createOrder(order: OrderInput): String
+}
+
+input OrderInput {
+    orderId: Int
+    storeId: Int
+    foods: [FoodInput]
+}
+
+input FoodInput {
+    food: String
+    quantity: Int
+    cost: Float
 }
 
 type Order {
+    orderId: Int
+    storeId: Int
+    foods: [Food]
+    status: String
+    total: Float
+}
 
+type Food {
+    food: String
+    quantity: Int
+    cost: Float
 }
