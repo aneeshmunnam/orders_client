@@ -4,18 +4,31 @@ import com.order.models.Food;
 import com.order.models.FoodInput;
 import com.order.models.Order;
 import com.order.models.OrderInput;
+import com.order.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 @Controller
 public class OrdersController {
 
     private final List<Order> orders = new ArrayList<>();
+
+    @Autowired
+    private OrderService orderService;
 
     @QueryMapping
     public List<Order> getOrders() {
@@ -25,37 +38,14 @@ public class OrdersController {
 
     @QueryMapping
     public String createOrder(@Argument OrderInput order) {
+        long currentTime = System.currentTimeMillis();
         if (order != null && order.getFoods() != null && !order.getFoods().isEmpty()) {
-            Order createOrder = new Order();
-            createOrder.setOrderId(order.getOrderId());
-            createOrder.setStoreId(order.getStoreId());
-            createOrder.setFoods(convertInputToFood(order.getFoods()));
-            createOrder.setStatus("ORDER CREATED");
-            Float total = 0.0f;
-            for (FoodInput food: order.getFoods()) {
-                if (food.getFood() != null && !food.getFood().isEmpty()) {
-                    total += food.getCost();
-                } else {
-                    return "Food value cannot be empty. Please provide an item from the list.";
-                }
-            }
-            createOrder.setTotal(total);
-            orders.add(createOrder);
-            // Push to queue
-            return "Order total is: "+total;
+            Order createdOrder = orderService.createOrder(order);
+            System.out.println("To create order and queue it took: "+(System.currentTimeMillis()-currentTime)+ " ms.");
+            return "Order total is: "+createdOrder.getTotal();
         } else {
             return "Order is empty. Please add something to order";
         }
     }
 
-    private List<Food> convertInputToFood(List<FoodInput> foodInputs) {
-        return foodInputs.stream()
-                .map(foodInput -> {
-                    Food food = new Food();
-                    food.setFood(foodInput.getFood());
-                    food.setCost(foodInput.getCost());
-                    food.setQuantity(foodInput.getQuantity());
-                    return food;
-                }).collect(Collectors.toList());
-    }
 }

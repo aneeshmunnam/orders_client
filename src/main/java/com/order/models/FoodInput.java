@@ -28,4 +28,9 @@ public class FoodInput {
     public void setCost(Float cost) {
         this.cost = cost;
     }
+
+    @Override
+    public String toString() {
+        return "{food:"+food+", quantity:"+quantity+", cost:"+cost+"}";
+    }
 }

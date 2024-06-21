@@ -31,4 +31,10 @@ public class OrderInput {
         this.foods = foods;
     }
 
+    @Override
+    public String toString() {
+        return "orderId:" + orderId +
+                ",storeId:" + storeId +
+                ",foods:" + foods;
+    }
 }
