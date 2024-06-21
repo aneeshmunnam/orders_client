@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Controller
 public class OrdersController {
 
-    private List<Order> orders = new ArrayList<>();
+    private final List<Order> orders = new ArrayList<>();
 
     @QueryMapping
     public List<Order> getOrders() {
