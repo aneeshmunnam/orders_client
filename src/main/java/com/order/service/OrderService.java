@@ -27,10 +27,16 @@ public class OrderService {
         CompletableFuture<String> queuing = CompletableFuture.supplyAsync(() -> {
             System.out.println("Pushing to directory");
             try {
-                File dir = new File(pathLocation+order.getStoreId()+"/"+order.getOrderId()+".log");
-                FileOutputStream fos = new FileOutputStream(dir);
+                File dirPath = new File(pathLocation+order.getStoreId());
+                if (!dirPath.exists()) {
+                    if (dirPath.mkdirs()) {
+                        System.out.println("Directory created for store: "+order.getStoreId());
+                    }
+                }
+                File filepath = new File(pathLocation+order.getStoreId()+"/"+order.getOrderId()+".log");
+                FileOutputStream fos = new FileOutputStream(filepath);
                 fos.write(order.toString().getBytes(StandardCharsets.UTF_8));
-                dir.createNewFile();
+                filepath.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
