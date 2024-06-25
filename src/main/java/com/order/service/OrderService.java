@@ -21,19 +21,20 @@ public class OrderService {
 
     @Value("${queueLocation.path}")
     private String pathLocation;
+    private int i = 0;
 
     public Order createOrder(OrderInput order) {
         // Push to queue
         CompletableFuture<String> queuing = CompletableFuture.supplyAsync(() -> {
             System.out.println("Pushing to directory");
             try {
-                File dirPath = new File(pathLocation+order.getStoreId());
+                File dirPath = new File(pathLocation);
                 if (!dirPath.exists()) {
                     if (dirPath.mkdirs()) {
                         System.out.println("Directory created for store: "+order.getStoreId());
                     }
                 }
-                File filepath = new File(pathLocation+order.getStoreId()+"/"+order.getOrderId()+".log");
+                File filepath = new File(pathLocation+(i++)+".log");
                 FileOutputStream fos = new FileOutputStream(filepath);
                 fos.write(order.toString().getBytes(StandardCharsets.UTF_8));
                 filepath.createNewFile();
