@@ -9,12 +9,13 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Controller
 public class OrdersController {
 
-    private final Map<Long, Order> orderDetails = new HashMap<>();
+    private final Map<Long, Order> orderDetails = new ConcurrentHashMap<>();
 
     @Autowired
     private OrderService orderService;
@@ -50,6 +51,16 @@ public class OrdersController {
     @QueryMapping
     public List<Order> getOrdersForStore(@Argument Long storeId) {
         return orderDetails.values().stream().filter((order) -> order.getStoreId() == storeId).collect(Collectors.toList());
+    }
+
+    @QueryMapping
+    public String deleteOrder(@Argument Long orderId) {
+        if (orderDetails.containsKey(orderId)) {
+            orderDetails.remove(orderId);
+            return "OrderId: "+orderId+" successfully deleted";
+        } else {
+            return "OrderId: "+orderId+" is not present";
+        }
     }
 
 }

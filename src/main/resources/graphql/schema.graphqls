@@ -1,8 +1,9 @@
 type Query {
     getOrders: [Order]
-    createOrder(order: OrderInput): String
+    createOrder(ordser: OrderInput): String
     orderStatus(orderId: Int): String
     getOrdersForStore(storeId: Int): [Order]
+    deleteOrder(orderId: Int): String
 }
 
 input OrderInput {
