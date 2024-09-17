@@ -51,8 +51,8 @@ public class OrderService {
         createOrder.setStatus("ORDER CREATED");
         Float total = 0.0f;
         for (FoodInput food: order.getFoods()) {
-            if (food.getFood() != null && !food.getFood().isEmpty()) {
-                total += food.getCost();
+            if (food.getFood() != null && !food.getFood().isEmpty() && food.getQuantity() != 0) {
+                total += food.getCost() * food.getQuantity();
             }
         }
         createOrder.setTotal(total);

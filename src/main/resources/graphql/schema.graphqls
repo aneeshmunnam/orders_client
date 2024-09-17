@@ -1,6 +1,6 @@
 type Query {
     getOrders: [Order]
-    createOrder(ordser: OrderInput): String
+    createOrder(order: OrderInput): String
     orderStatus(orderId: Int): String
     getOrdersForStore(storeId: Int): [Order]
     deleteOrder(orderId: Int): String
@@ -14,7 +14,7 @@ input OrderInput {
 
 input FoodInput {
     food: String
-    quantity: Int
+    quantity: Float
     cost: Float
 }
 
@@ -28,6 +28,6 @@ type Order {
 
 type Food {
     food: String
-    quantity: Int
+    quantity: Float
     cost: Float
 }

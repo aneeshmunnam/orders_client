@@ -2,7 +2,7 @@ package com.order.models;
 
 public class FoodInput {
     private String food;
-    private int quantity;
+    private Float quantity;
     private Float cost;
 
     public String getFood() {
@@ -13,11 +13,11 @@ public class FoodInput {
         this.food = food;
     }
 
-    public int getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 
