@@ -63,4 +63,16 @@ public class OrdersController {
         }
     }
 
+    @QueryMapping
+    public String updateStatus(@Argument Long orderId, @Argument String status) {
+        if (orderDetails.containsKey(orderId)) {
+            Order update_order = orderDetails.get(orderId);
+            update_order.setStatus(status);
+            orderDetails.put(orderId, update_order);
+            return "Order updated";
+        } else {
+            return "Order is not present";
+        }
+    }
+
 }

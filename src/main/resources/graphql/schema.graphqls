@@ -4,6 +4,7 @@ type Query {
     orderStatus(orderId: Int): String
     getOrdersForStore(storeId: Int): [Order]
     deleteOrder(orderId: Int): String
+    updateStatus(orderId: Int, status: String): String
 }
 
 input OrderInput {
